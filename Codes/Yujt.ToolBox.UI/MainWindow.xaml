@@ -1,0 +1,22 @@
+﻿<Window x:Class="Yujt.ToolBox.UI.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Icon="Images/Tools.ico" Title="赚客工具箱" Height="480" Width="800">
+    <Grid>
+        <TabControl Name ="ToolBoxTabControl" ItemsSource="{Binding Plugins}" SelectedIndex="0">
+            <TabControl.ItemTemplate>
+                <DataTemplate>
+                    <DockPanel HorizontalAlignment="Left">
+                        <Image Source="{Binding IcoPath}" Width="20" Height="20"/>
+                        <TextBlock Text="{Binding Name}"/>
+                    </DockPanel>
+                </DataTemplate>
+            </TabControl.ItemTemplate>
+            <TabControl.ContentTemplate>
+                <DataTemplate>
+                    <ContentControl Content ="{Binding TabItemContentControl}"></ContentControl>
+                </DataTemplate>
+            </TabControl.ContentTemplate>
+        </TabControl>
+    </Grid>
+</Window>

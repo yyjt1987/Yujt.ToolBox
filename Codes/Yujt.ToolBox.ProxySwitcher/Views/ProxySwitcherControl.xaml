@@ -1,0 +1,53 @@
+﻿<UserControl x:Class="Yujt.ToolBox.ProxySwitcher.Views.ProxySwitcherControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:xgControl="clr-namespace:ExtendedGrid.ExtendedGridControl;assembly=ExtendedGrid"
+             xmlns:xgColumn="clr-namespace:ExtendedGrid.ExtendedColumn;assembly=ExtendedGrid"
+             mc:Ignorable="d" 
+             d:DesignWidth="800">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <TextBox Name ="LocalIp" 
+                 Text="{Binding LocalIpInfo}" 
+                 Grid.Column="0"
+                 Grid.Row="0"
+                 IsEnabled="False"/>
+        <Button Content="重置代理"
+                Grid.Column="1"
+                Grid.Row="0"
+                Width="100"
+                HorizontalAlignment="Right"
+                Command="{Binding ResetCommand}"/>
+
+        <xgControl:ExtendedDataGrid ItemsSource="{Binding Proxies}"
+                                    SelectedItem="{Binding SelectedProxy}"
+                                    IsReadOnly="True"
+                                    AutoGenerateColumns="False"
+                                    GroupByControlVisibility="Collapsed" Grid.Row="1" Grid.ColumnSpan="2">
+            <xgControl:ExtendedDataGrid.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="切换" Command="{Binding SwitchCommand}"/>
+                    <MenuItem Header="检测" Command="{Binding CheckCommand}"/>
+                    <MenuItem Header="复制" Command="{Binding CopyCommand}"/>
+                </ContextMenu>
+            </xgControl:ExtendedDataGrid.ContextMenu>
+            <xgControl:ExtendedDataGrid.Columns>
+                <xgColumn:ExtendedDataGridTextColumn Header="服务器地址" Binding="{Binding Host}" AllowAutoFilter="True" Width="150"/>
+                <xgColumn:ExtendedDataGridTextColumn Header="端口" Binding="{Binding Port}" AllowAutoFilter="True" Width="80"/>
+                <xgColumn:ExtendedDataGridTextColumn Header="区域" Binding="{Binding Area}" AllowAutoFilter="True" Width="80"/>
+                <xgColumn:ExtendedDataGridTextColumn Header="耗时（毫秒）" Binding="{Binding TimeSpent}" AllowAutoFilter="True" Width="100"/>
+                <xgColumn:ExtendedDataGridTextColumn Header="地址" Binding="{Binding Address}" AllowAutoFilter="True" Width="300"/>
+            </xgControl:ExtendedDataGrid.Columns>
+        </xgControl:ExtendedDataGrid>
+    </Grid>
+</UserControl>
