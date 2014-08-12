@@ -34,3 +34,13 @@ Icon
 # Files that might appear on external disk
 .Spotlight-V100
 .Trashes
+
+# ignore bin and obj folder
+[Bb]in
+[Bb]in/*
+[Oo]bj
+[Oo]bj/*
+
+
+#ignore *.suo file
+*.suo
