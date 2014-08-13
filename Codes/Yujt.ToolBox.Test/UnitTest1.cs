@@ -1,7 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
-using CsvHelper;
-using CsvHelper.Configuration;
+using System.Net;
+using System.Text;
 using NUnit.Framework;
 using Yujt.Common.Helper;
 
@@ -43,57 +44,11 @@ namespace Yujt.ToolBox.Test
             Assert.IsNotNull(response);
         }
 
+
         [Test]
         public void DateTimeTest()
         {
-            var envalueString = "envalue : \"372455\"";
-            var firstPosition = envalueString.IndexOf('\"') + 1 ;
-            var length = envalueString.LastIndexOf('\"') - firstPosition + 1;
-            var envalue = envalueString.Substring(firstPosition + 1, length);
-
-            Assert.AreEqual(6, envalue.Length);
-        }
-
-        [Test]
-        public void CsvReaderTest()
-        {
-
-            //var config = new CsvConfiguration { QuoteAllFields = true, HasHeaderRecord = true };
-            using (var sr = new StreamReader(File.OpenRead(@"C:\a.csv")))
-            {
-                var reader = new CsvReader(sr);
-                while (reader.Read())
-                {
-                    var list = reader.GetRecord<MockObj>();
-                }
-            }
-        }
-
-        [Test]
-        public void CsvWriterTest()
-        {
-            var config = new CsvConfiguration {QuoteAllFields = true, HasHeaderRecord = false};
-            var tw = new StreamWriter(@"C:\a.csv");
-            var writer = new CsvWriter(tw);
-
-            //var list = new List<MockObj>
-            //{
-            //    new MockObj {Name = "abc", Password = "12356677"},
-            //    new MockObj {Name = "abcd", Password = "1234"}
-            //};
-            //writer.WriteRecords(list);
-
-            var obj = new MockObj { Name = "abc", Password = "12356677" };
-            writer.WriteRecord(obj);
-            tw.Flush();
-            tw.Close();
-        }
-
-        public class MockObj
-        {
-            public string Name { get; set; }
-
-            public string Password { get; set; }
+            var now = DateTime.Now.Ticks;
         }
     }
 }

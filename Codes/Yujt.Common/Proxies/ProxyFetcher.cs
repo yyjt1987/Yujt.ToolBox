@@ -66,7 +66,6 @@ namespace yujt.common.Proxies
                 count++;
                 try
                 {
-
                     var proxyHtml = HttpRequestHelper.Get(CommonAppSetting.Instatance.ForeignProxyProvider,
                                                           null,
                                                           GetHeaders());
@@ -106,16 +105,13 @@ namespace yujt.common.Proxies
             return proxyList;
         }
 
-
         private WebHeaderCollection GetHeaders()
         {
             var headers = new WebHeaderCollection
             {
-                {"Timeout", "10000"}
+                {"Timeout", "15000"}
             };
             return headers;
         }
-
-
     }
 }

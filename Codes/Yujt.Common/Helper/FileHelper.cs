@@ -14,12 +14,11 @@ namespace Yujt.Common.Helper
             }
         }
 
-
         public static void CreateFileAndParentDirectory(string path)
         {
             CreateParentDirectory(path);
-            var stream = File.Create(path);
-            stream.Close();
+            var s = File.Create(path);
+            s.Close();
         }
 
         public static void TryDeleteFilesIn(string path)
@@ -34,6 +33,14 @@ namespace Yujt.Common.Helper
                 }catch(Exception)
                 { }
             }
+        }
+
+        public static long GetFileSize(string path)
+        {
+            var stream = new FileStream(path, FileMode.Open);
+            var length = stream.Length;
+            stream.Close();
+            return length;
         }
     }
 }

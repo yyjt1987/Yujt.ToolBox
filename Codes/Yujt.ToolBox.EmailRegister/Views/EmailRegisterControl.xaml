@@ -13,11 +13,13 @@
             <ColumnDefinition/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <xgControl:ExtendedDataGrid ItemsSource="{Binding RegisteredEeails}"
+        <xgControl:ExtendedDataGrid ItemsSource="{Binding RegisteredEmails}"
                                     SelectedItem="{Binding SelectedEmail}"
                                     IsReadOnly="True"
                                     AutoGenerateColumns="False"
-                                    GroupByControlVisibility="Collapsed" Grid.Column="0">
+                                    GroupByControlVisibility="Collapsed"
+                                    Grid.Column="0"
+                                    ShowRowNumber="True">
             <xgControl:ExtendedDataGrid.ContextMenu>
                 <ContextMenu>
                     <MenuItem Header="复制用户名" Command="{Binding CopyNameCommand}"/>
@@ -42,10 +44,12 @@
             </Grid.Resources>
 
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="80"/>
+                <ColumnDefinition Width="90"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
@@ -82,11 +86,6 @@
                     </ControlTemplate>
                 </Button.Template>
             </Button>
-
-            <!--<Image Grid.Row="2"
-                   Grid.Column="0"
-                   Grid.ColumnSpan="2"
-                   Source="{Binding VerifyCodeImagePath}"/>-->
             <Label Grid.Row="4"
                    Grid.Column="0"
                    Content="输入验证码："/>
@@ -95,6 +94,29 @@
                      Text="{Binding VerifyCode}"
                      b:TextBoxBehavior.OnLostFocus="{Binding RegisterEmailCommand}"/>
 
+            <Label Grid.Row="5"
+                   Grid.Column="0"
+                   Content="验证码2："
+                   Visibility="{Binding SecondVisibility}"/>
+            <Button Grid.Row="5"
+                    Grid.Column="1"
+                    Command="{Binding RefreshSecondImageCommand}"
+                    Visibility="{Binding SecondVisibility}">
+                <Button.Template>
+                    <ControlTemplate>
+                        <Image Source="{Binding SecondVerifyCodeImagePath}"/>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+            <Label Grid.Row="6"
+                   Grid.Column="0"
+                   Content="输入验证码2："
+                   Visibility="{Binding SecondVisibility}"/>
+            <TextBox Grid.Row="6"
+                     Grid.Column="1"
+                     Text="{Binding SecondVerifyCode}"
+                     b:TextBoxBehavior.OnLostFocus="{Binding SecondVerifyCommand}"
+                     Visibility="{Binding SecondVisibility}"/>
         </Grid>
     </Grid>
 </UserControl>

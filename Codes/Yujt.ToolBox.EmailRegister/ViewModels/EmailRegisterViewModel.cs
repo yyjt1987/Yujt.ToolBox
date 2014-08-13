@@ -1,9 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
-using System.IO;
 using System.Windows;
-using CsvHelper;
-using CsvHelper.Configuration;
 using Yujt.Common.Helper;
 using Yujt.ToolBox.Common.Commands;
 using Yujt.ToolBox.EmailRegister.Annotations;
@@ -14,19 +11,21 @@ namespace Yujt.ToolBox.EmailRegister.ViewModels
     public class EmailRegisterViewModel : INotifyPropertyChanged
     {
         private IEmailRegister m163EmailRegister = new Email163Register();
-
-        private event EventHandler RegisterCompleted;
+        private readonly IEmailPersistentService mEmailPersistentService = new Email163PersistentService();
+        private event EventHandler CompleteRegisterEvent;
 
         public EmailRegisterViewModel()
         {
+            CompleteRegisterEvent = CompleteRegister;
+            SecondVisibility = Visibility.Hidden;
+            RefreshImage();
             Password = "123qaz";
             SwitchIpProxyFrequency = 8;
-            RegisterCompleted += CompleteCallback;
             RefreshRandomName();
-            RefreshImage();
+            RegisteredEmails = new RegisteredEmailCollection(mEmailPersistentService.GetEmaiList());
         }
 
-        public RegisteredEmailCollection RegisteredEeails { get; set; }
+        public RegisteredEmailCollection RegisteredEmails { get; set; }
 
         public Email SelectedEmail { get; set; }
 
@@ -84,6 +83,39 @@ namespace Yujt.ToolBox.EmailRegister.ViewModels
             }
         }
 
+        private Visibility mSecondVisibility;
+        public Visibility SecondVisibility
+        {
+            get { return mSecondVisibility; }
+            set
+            {
+                mSecondVisibility = value;
+                OnPropertyChanged("SecondVisibility");
+            }
+        }
+
+        private string mSecondVerifyCodeImagePath;
+        public string SecondVerifyCodeImagePath
+        {
+            get { return mSecondVerifyCodeImagePath; }
+            set
+            {
+                mSecondVerifyCodeImagePath = value;
+                OnPropertyChanged("SecondVerifyCodeImagePath");
+            }
+        }
+
+        private string mSecondVerifyCode;
+        public string SecondVerifyCode
+        {
+            get { return mSecondVerifyCode; }
+            set
+            {
+                mSecondVerifyCode = value;
+                OnPropertyChanged("SecondVerifyCode");
+            }
+        }
+
         #region Commands
 
         public DelegatingCommand CopyNameCommand
@@ -99,6 +131,19 @@ namespace Yujt.ToolBox.EmailRegister.ViewModels
         public DelegatingCommand RegisterEmailCommand
         {
             get { return new DelegatingCommand(RegisterEmail); }
+        }
+
+        public DelegatingCommand RefreshSecondImageCommand
+        {
+            get { return new DelegatingCommand(RefreshSecondImage);}
+        }
+
+        public DelegatingCommand SecondVerifyCommand
+        {
+            get
+            {
+                return new DelegatingCommand(SecondCodeVerify);
+            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -117,63 +162,104 @@ namespace Yujt.ToolBox.EmailRegister.ViewModels
         #region Private Methods
         private void RefreshImage()
         {
-            VerifyCodeImagePath = m163EmailRegister.GetVerifyCodeImagePath();
+            VerifyCodeImagePath = m163EmailRegister.GetFirstVerifyCodeImagePath();
+            VerifyCode = string.Empty;
         }
 
         private void CopyName()
         {
-            Clipboard.SetDataObject(Name, false);
+            Clipboard.SetDataObject(SelectedEmail.Name, false);
         }
 
         private void RegisterEmail()
         {
-            if (string.IsNullOrEmpty(VerifyCode) || string.IsNullOrWhiteSpace(VerifyCode))
+            if (SecondVisibility == Visibility.Visible)
             {
-                MessageBox.Show("请输入验证码");
                 return;
             }
-            m163EmailRegister.Register(Name, Password, VerifyCode);
-            RefreshRandomName();
-            RefreshImage();
+            if (string.IsNullOrEmpty(VerifyCode) || string.IsNullOrWhiteSpace(VerifyCode))
+            {
+                return;
+            }
+            string secondImagePath;
+            var result = m163EmailRegister.Register(Name, Password, VerifyCode, out secondImagePath);
+
+            if (result)
+            {
+                OnCompleteRegisterEvent();
+            }
+            else
+            {
+                if (!string.IsNullOrEmpty(secondImagePath))
+                {
+                    SecondVerifyCodeImagePath = secondImagePath;
+                    SecondVisibility = Visibility.Visible;
+                }
+                else
+                {
+                    RegisterFailed();
+                    MessageBox.Show("注册失败");
+                }
+            }
+
         }
 
         private void RefreshRandomName()
         {
-            var tempRandomName = RandomHelper.GetRandomString(8);
+            var tempRandomName = RandomHelper.GetLowerRandomString(8);
             while (!m163EmailRegister.IsEmailNameAvailable(tempRandomName))
             {
-                tempRandomName = RandomHelper.GetRandomString(8);
+                tempRandomName = RandomHelper.GetLowerRandomString(8);
             }
             Name = tempRandomName;
         }
 
-        private void CompleteCallback(object sender, EventArgs e)
+
+        private void RefreshSecondImage()
+        {
+            SecondVerifyCodeImagePath = m163EmailRegister.GetSecondVerifyCodeImagePath();
+            SecondVerifyCode = string.Empty;
+        }
+
+        private void SecondCodeVerify()
+        {
+            var result = m163EmailRegister.SecondVerifyPost(SecondVerifyCode);
+            if (!result)
+            {
+                RefreshSecondImage();
+                MessageBox.Show("验证码错误，请再次输入。");
+                return;
+            }
+
+            OnCompleteRegisterEvent();
+
+        }
+
+        protected virtual void OnCompleteRegisterEvent()
+        {
+            if (CompleteRegisterEvent != null)
+            {
+                CompleteRegisterEvent(this, EventArgs.Empty);
+            }
+        }
+
+        private void CompleteRegister(object sender, EventArgs e)
+        {
+            var email = new Email {Name = Name+"@163.com", Password = Password};
+            RegisteredEmails.Add(email);
+            mEmailPersistentService.Save(email);
+            m163EmailRegister = new Email163Register();
+            RefreshImage();
+            RefreshRandomName();
+            SecondVisibility = Visibility.Hidden;
+        }
+
+        private void RegisterFailed()
         {
             m163EmailRegister = new Email163Register();
             RefreshImage();
             RefreshRandomName();
-        }
-
-        protected virtual void OnRegisterCompleted()
-        {
-            if (RegisterCompleted != null) RegisterCompleted(this, EventArgs.Empty);
-        }
-
-
-        private void SaveEmail(string name, string password)
-        {
-            var config = new CsvConfiguration {QuoteAllFields = true};
-            var tw = new StreamWriter(@"C:\a.csv");
-            var writer = new CsvWriter(tw, config);
-
-            writer.WriteRecord(new Email
-            {
-                Name = name + "@163.com", 
-                Password = password
-            });
-            tw.Flush();
-            tw.Close();
-
+            SecondVisibility = Visibility.Hidden;
         }
 
         #endregion

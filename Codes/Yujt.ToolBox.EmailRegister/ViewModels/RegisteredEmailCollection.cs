@@ -1,14 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
 
 namespace Yujt.ToolBox.EmailRegister.ViewModels
 {
     public class RegisteredEmailCollection : ObservableCollection<Email>
     {
-
+        public RegisteredEmailCollection(IEnumerable<Email> emails)
+            : base(emails)
+        {
+            
+        }
     }
 
     public class Email

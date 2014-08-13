@@ -1,7 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design.Serialization;
 using System.IO;
+using System.IO.Compression;
+using System.Linq;
 using System.Net;
+using System.Reflection;
 using System.Text;
 
 namespace Yujt.Common.Helper
@@ -48,9 +52,14 @@ namespace Yujt.Common.Helper
                 if (response.StatusCode != HttpStatusCode.OK)
                 {
                     throw new Exception(response.StatusDescription);
-
                 }
-                using (var sr = new StreamReader(response.GetResponseStream(), Encoding.GetEncoding(encodingStr)))
+
+                var responseStream = response.GetResponseStream();
+                if (response.ContentEncoding.ToLower().Contains("gzip"))
+                {
+                    responseStream = new GZipStream(responseStream, CompressionMode.Decompress);
+                }
+                using (var sr = new StreamReader(responseStream, Encoding.GetEncoding(encodingStr)))
                 {
                     return sr.ReadToEnd();
                 }
@@ -63,7 +72,7 @@ namespace Yujt.Common.Helper
         {
             var request = (HttpWebRequest)WebRequest.Create(url);
             request.Method = "GET";
-            request.Timeout = 2000;
+            request.Timeout = 20000;
 
             if (cookieCollection != null)
             {
@@ -86,6 +95,7 @@ namespace Yujt.Common.Helper
         {
             var request = (HttpWebRequest)WebRequest.Create(url);
             request.Timeout = DEFAULT_TIMEOUT;
+            request.ServicePoint.Expect100Continue = false;
 
             if (cookieCollection != null)
             {
@@ -110,7 +120,7 @@ namespace Yujt.Common.Helper
             //定义返回流
             using (var response = (HttpWebResponse)request.GetResponse())
             {
-                if (response.StatusCode != HttpStatusCode.OK)
+                if (response.StatusCode != HttpStatusCode.OK && response.StatusCode != HttpStatusCode.Created)
                 {
                     throw new Exception(response.StatusDescription);
                 }
@@ -143,11 +153,20 @@ namespace Yujt.Common.Helper
             return cookieColllection;
         }
 
-        public static CookieCollection GenerateCookiesFromUrl(string fromUrl)
+        public static CookieCollection GenerateCookiesFromUrl(string fromUrl, CookieCollection srcCookieCollection = null, WebHeaderCollection headers = null)
         {
             var request = (HttpWebRequest)WebRequest.Create(fromUrl);
             request.Method = "GET";
             request.Timeout = DEFAULT_TIMEOUT;
+
+            if (srcCookieCollection != null)
+            {
+                var cookieContainer = new CookieContainer();
+                cookieContainer.Add(new Uri(fromUrl), srcCookieCollection);
+                request.CookieContainer = cookieContainer;
+            }
+
+            AssginHeaer(request, headers);
 
             var response = (HttpWebResponse)request.GetResponse();
 
@@ -159,11 +178,8 @@ namespace Yujt.Common.Helper
             {
                 if (!string.IsNullOrWhiteSpace(c))
                 {
-                    var position = c.IndexOf(';');//find firt ';'
-                    var cookieitem = position > 0 ? c.Substring(0, position) : c;
-
-                    var cookiePair = cookieitem.Split('=');
-                    cookieCollection.Add(new Cookie(cookiePair[0], cookiePair[1]));
+                    var cookie = DeserializeCookieFromSetCookieString(c);
+                    cookieCollection.Add(cookie);
                 }
             }
 
@@ -211,10 +227,11 @@ namespace Yujt.Common.Helper
         {
             var headers = new WebHeaderCollection
             {
-                {"Accept", "*/*"},
+                //{"Accept", "*/*"},
                 {"Accept-Encoding", "gzip,deflate,sdch"},
                 {"Accept-Language", "zh-CN,zh;q=0.8,en;q=0.6,zh-TW;q=0.4"},
-                {"User-Agent", "Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.114 Safari/537.36"}
+                {"User-Agent", "Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.114 Safari/537.36"},
+                {"Connection", "keep-alive"}
             };
 
             if (!string.IsNullOrEmpty(encodingStr))
@@ -227,7 +244,7 @@ namespace Yujt.Common.Helper
         public static WebHeaderCollection GetDefaultPostHeaders(string encodingStr = null)
         {
             var headers = GetDefaultHeaders(encodingStr);
-            headers.Add("X-Requested-With", "XMLHttpRequest");
+            //headers.Add("X-Requested-With", "XMLHttpRequest");
 
             return headers;
         }
@@ -247,7 +264,12 @@ namespace Yujt.Common.Helper
                         request.Accept = headers[key];
                         break;
                     case "Connection":
-                        request.Connection = headers[key];
+                        request.KeepAlive = true;
+                        var sp = request.ServicePoint;
+                        var prop = sp.GetType().GetProperty("HttpBehaviour",
+                                                BindingFlags.Instance | BindingFlags.NonPublic);
+                        prop.SetValue(sp, (byte)0, null);
+                        //request.Connection = headers[key];
                         break;
                     case "Content-Length":
                         request.ContentLength = Convert.ToInt64(headers[key]);
@@ -286,6 +308,7 @@ namespace Yujt.Common.Helper
                     case "Proxy":
                         request.Proxy = new WebProxy(headers["Proxy"]);
                         break;
+
                     default:
                         request.Headers.Add(key, headers[key]);
                         break;
@@ -293,6 +316,34 @@ namespace Yujt.Common.Helper
             }
         }
 
+        private static Cookie DeserializeCookieFromSetCookieString(string setCookieString)
+        {
+            var cookie = new Cookie();
+            var values = setCookieString.Split(new[] { ';', '=' }, StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < values.Length; i += 2)
+            {
+                if (i + 1 == values.Length)
+                {
+                    if (values[i].Trim().ToLower().Equals("secure"))
+                    {
+                        cookie.Secure = true;
+                    }
+                }
+                else
+                {
+                    if (values[i].Trim().ToLower().Equals("path"))
+                    {
+                        cookie.Path = values[i + 1].Trim();
+                    }
+                    else
+                    {
+                        cookie.Name = values[i].Trim();
+                        cookie.Value = values[i + 1].Trim();
+                    }
+                }
+            }
+            return cookie;
+        }
         #endregion
 
     }

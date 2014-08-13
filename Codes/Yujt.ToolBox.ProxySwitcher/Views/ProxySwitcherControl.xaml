@@ -33,7 +33,10 @@
                                     SelectedItem="{Binding SelectedProxy}"
                                     IsReadOnly="True"
                                     AutoGenerateColumns="False"
-                                    GroupByControlVisibility="Collapsed" Grid.Row="1" Grid.ColumnSpan="2">
+                                    GroupByControlVisibility="Collapsed"
+                                    Grid.Row="1"
+                                    Grid.ColumnSpan="2"
+                                    ShowRowNumber="True">
             <xgControl:ExtendedDataGrid.ContextMenu>
                 <ContextMenu>
                     <MenuItem Header="切换" Command="{Binding SwitchCommand}"/>

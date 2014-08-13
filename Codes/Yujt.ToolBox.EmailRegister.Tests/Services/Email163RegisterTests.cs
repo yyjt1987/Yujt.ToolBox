@@ -15,7 +15,47 @@ namespace Yujt.ToolBox.EmailRegister.Services.Tests
         {
             var emailRegister = new Email163Register();
 
-            emailRegister.GetVerifyCodeImagePath();
+            emailRegister.GetFirstVerifyCodeImagePath();
+        }
+
+        [Test()]
+        public void GetHttpsCookiesTest()
+        {
+            var emailRegister = new Email163Register();
+            var cookies = emailRegister.GetHttpsCookies();
+
+            Assert.AreEqual(3, cookies.Count);
+        }
+
+        [Test()]
+        public void GetVcCodeUrlFromPageContentTest()
+        {
+            var emailRegister = new Email163Register();
+            var url = emailRegister.GetVcCodeUrlFromPageContent();
+
+            Assert.IsNotNull(url);
+        }
+
+        [Test()]
+        public void IsEmailNameAvailableTest()
+        {
+            var emailRegister = new Email163Register();
+            var result = emailRegister.IsEmailNameAvailable("slkdjhflksdhflkjf");
+            Assert.IsTrue(result);
+        }
+
+        [Test()]
+        public void EnvalueCalcTest()
+        {
+            var emailRegister = new Email163Register();
+            var envalue = emailRegister.EnvalueCalc("537472");
+        }
+
+        [Test()]
+        public void GetVcCodeUrlFromPageContentTest1()
+        {
+            var emailRegister = new Email163Register();
+            var envalue = emailRegister.GetVcCodeUrlFromPageContent();
         }
     }
 }

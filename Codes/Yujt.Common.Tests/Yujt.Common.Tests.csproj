@@ -74,6 +74,7 @@
     <Compile Include="Emails\Email163RegisterTests.cs" />
     <Compile Include="Helper\HttpRequsetHelperTests.cs" />
     <Compile Include="Helper\IeProxyHelperTests.cs" />
+    <Compile Include="Helper\RadomHelperTests.cs" />
     <Compile Include="Helper\RandomHelperTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Proxies\ProxyFetcherTests.cs" />

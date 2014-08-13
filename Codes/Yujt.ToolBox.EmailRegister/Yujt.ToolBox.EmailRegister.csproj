@@ -34,10 +34,13 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="CsvHelper">
-      <HintPath>..\libs\CsvHelper.dll</HintPath>
+      <HintPath>..\packages\CsvHelper.2.7.0\lib\net40-client\CsvHelper.dll</HintPath>
     </Reference>
     <Reference Include="ExtendedGrid">
       <HintPath>..\libs\ExGrid\ExtendedGrid.dll</HintPath>
+    </Reference>
+    <Reference Include="HtmlAgilityPack">
+      <HintPath>..\libs\HtmlAgilityPack.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -56,6 +59,8 @@
   <ItemGroup>
     <Compile Include="Controller\EmailRegisterController.cs" />
     <Compile Include="Properties\Annotations.cs" />
+    <Compile Include="Services\IEmailPersistentService.cs" />
+    <Compile Include="Services\Email163PersistentService.cs" />
     <Compile Include="ViewModels\EmailRegisterViewModel.cs" />
     <Compile Include="ViewModels\RegisteredEmailCollection.cs" />
     <Compile Include="Views\EmailRegisterControl.xaml.cs">
@@ -89,6 +94,9 @@
     <Content Include="Images\VerifyCodeError.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

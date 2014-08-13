@@ -5,7 +5,7 @@ namespace Yujt.Common.Helper
 {
     public class RandomHelper
     {
-        private const string KEYS_LOWER= "qwertyuioplkjhgfdsazxcvbnm";
+        private const string KEYS_LOWER = "qwertyuioplkjhgfdsazxcvbnm";
         private const string KEYS_UPPER = "QWERTYUIOPASDFGHJKLMNBVCXZ";
         private const string KEYS_NUM = "0123456789";
 
