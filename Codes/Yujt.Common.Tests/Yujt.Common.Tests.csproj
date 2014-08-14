@@ -71,6 +71,7 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="CommonAppSettingTests.cs" />
     <Compile Include="Emails\Email163RegisterTests.cs" />
     <Compile Include="Helper\HttpRequsetHelperTests.cs" />
     <Compile Include="Helper\IeProxyHelperTests.cs" />
@@ -80,7 +81,6 @@
     <Compile Include="Proxies\ProxyFetcherTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

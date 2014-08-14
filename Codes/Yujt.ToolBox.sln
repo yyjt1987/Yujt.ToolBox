@@ -37,6 +37,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HaoShengYinHongbao", "HaoSh
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yujt.ToolBox.EmailRegister.Tests", "Yujt.ToolBox.EmailRegister.Tests\Yujt.ToolBox.EmailRegister.Tests.csproj", "{B344A9E1-65BB-40A7-A657-03A741885203}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yujt.UnitTest.Common", "Yujt.UnitTest.Common\Yujt.UnitTest.Common.csproj", "{952047A8-275A-4200-8259-ECCD3F8D2548}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProxyFetcherConsole", "ProxyFetcherConsole\ProxyFetcherConsole.csproj", "{78B7C0F7-D402-4825-911D-36498C5B8920}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -99,6 +103,14 @@ Global
 		{B344A9E1-65BB-40A7-A657-03A741885203}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B344A9E1-65BB-40A7-A657-03A741885203}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B344A9E1-65BB-40A7-A657-03A741885203}.Release|Any CPU.Build.0 = Release|Any CPU
+		{952047A8-275A-4200-8259-ECCD3F8D2548}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{952047A8-275A-4200-8259-ECCD3F8D2548}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{952047A8-275A-4200-8259-ECCD3F8D2548}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{952047A8-275A-4200-8259-ECCD3F8D2548}.Release|Any CPU.Build.0 = Release|Any CPU
+		{78B7C0F7-D402-4825-911D-36498C5B8920}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78B7C0F7-D402-4825-911D-36498C5B8920}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{78B7C0F7-D402-4825-911D-36498C5B8920}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{78B7C0F7-D402-4825-911D-36498C5B8920}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -114,5 +126,7 @@ Global
 		{987B740D-9E7A-49BC-B24C-17D9AE5692F2} = {7513F38E-E191-43F0-9346-5F3C2F81B681}
 		{7F9D2B9E-A6A0-4FA1-AA8D-694880768543} = {7513F38E-E191-43F0-9346-5F3C2F81B681}
 		{B344A9E1-65BB-40A7-A657-03A741885203} = {143E6111-6CA4-48A8-9181-AF4B1F3341AD}
+		{952047A8-275A-4200-8259-ECCD3F8D2548} = {143E6111-6CA4-48A8-9181-AF4B1F3341AD}
+		{78B7C0F7-D402-4825-911D-36498C5B8920} = {7513F38E-E191-43F0-9346-5F3C2F81B681}
 	EndGlobalSection
 EndGlobal

@@ -36,6 +36,9 @@
     <Reference Include="HtmlAgilityPack">
       <HintPath>..\libs\HtmlAgilityPack.dll</HintPath>
     </Reference>
+    <Reference Include="OpenPop">
+      <HintPath>..\packages\OpenPop.NET.2.0.6.1071\lib\net40\OpenPop.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
@@ -54,6 +57,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CommonAppSetting.cs" />
+    <Compile Include="Emails\BaseEmail.cs" />
+    <Compile Include="Emails\IEmail.cs" />
+    <Compile Include="Emails\Email163.cs" />
     <Compile Include="Encrypts\DesEncyptor.cs" />
     <Compile Include="EnsureThat\Ensure.cs" />
     <Compile Include="EnsureThat\EnsureExceptionFactory.cs" />
@@ -80,7 +86,9 @@
     <Compile Include="Helper\StringHelper.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="Yujt.Common.dll.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />
