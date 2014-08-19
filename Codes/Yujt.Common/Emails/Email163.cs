@@ -1,24 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using OpenPop.Pop3;
-
-
-namespace Yujt.Common.Emails
+﻿namespace Yujt.Common.Emails
 {
-    public class Email163 : IEmail
+    public class Email163 : BaseEmail
     {
-        private Pop3Client mPop3Client;
 
-        public Email163(string userName, string password)
+        public Email163(string userName, string password) : base(userName, password)
         {
-            mPop3Client = new Pop3Client();
-        }
-
-        public void ReceiveMail()
-        {
-
+            InitPop3("pop.163.com", 995);
+            InitSmtp("smtp.163.com", 25, false);
         }
     }
 }

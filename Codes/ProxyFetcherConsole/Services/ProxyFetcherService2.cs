@@ -118,7 +118,6 @@ namespace ProxyFetcherConsole.Services
                         {
                             mProxies.Add(proxy);
                         }
-                        OnNewProxyFundEvent(proxy);
                     }
                 }
             }//Validate all proxy from internet
