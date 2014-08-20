@@ -14,7 +14,15 @@ namespace yujt.common.EnsureThat
 
         public void IfNotSatisfyThrow(string errMsg)
         {
-            throw EnsureExceptionFactory.CreateException(ExceptionType, errMsg);
+            if (!IsSatisfied)
+            {
+                throw EnsureExceptionFactory.CreateException(ExceptionType, errMsg);
+            }
+        }
+        public void IfNotSatisfyThrow(string errMsgFormat, string[] args)
+        {
+            var errMsg = string.Format(errMsgFormat, args);
+            IfNotSatisfyThrow(errMsg);
         }
         public void IfNotSatisfyThrow(Exception ex)
         {

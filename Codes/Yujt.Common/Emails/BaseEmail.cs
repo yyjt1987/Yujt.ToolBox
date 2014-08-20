@@ -2,9 +2,11 @@
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
+using System.Runtime;
 using OpenPop.Mime;
 using OpenPop.Pop3;
 using yujt.common.EnsureThat;
+using Yujt.Common.EnsureThat;
 using Yujt.Common.Helper;
 
 namespace Yujt.Common.Emails
@@ -66,25 +68,21 @@ namespace Yujt.Common.Emails
         public void SaveFirstAttachement(string subject, string targetPath)
         {
             var message = ReceiveMail(subject);
-            //Ensure.That(message).
+            Ensure.That(message).IsNotNull()
+                  .IfNotSatisfyThrow("No Mail can be found with the subject of {0}", new[] { subject });
             var attachement = message.FindAllAttachments().FirstOrDefault();
 
-            if (attachement != null)
+            Ensure.That(attachement).IsNotNull()
+                  .IfNotSatisfyThrow("There is no mail contain attachement whose subject is{0}", new[] { subject });
+            
+            if (!File.Exists(targetPath))
             {
-                if (!File.Exists(targetPath))
-                {
-                    FileHelper.CreateParentDirectory(targetPath);
-                }
-
-                using (var saveStream = new FileStream(targetPath, FileMode.Create))
-                {
-                    attachement.Save(saveStream);
-                }
+                FileHelper.CreateParentDirectory(targetPath);
             }
-            else
+
+            using (var saveStream = new FileStream(targetPath, FileMode.Create))
             {
-                var errrMessage = string.Format("There is no mail contain attachement whose subject is{0}", subject);
-                throw new EmailException(errrMessage);
+                attachement.Save(saveStream);
             }
         }
 
@@ -128,7 +126,7 @@ namespace Yujt.Common.Emails
             return smtpClient;
         }
 
-        #endregion 
+        #endregion
     }
 
 

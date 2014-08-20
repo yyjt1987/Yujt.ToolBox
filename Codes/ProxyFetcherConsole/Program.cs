@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using ProxyFetcherConsole.Services;
 
 namespace ProxyFetcherConsole
 {
@@ -10,6 +7,15 @@ namespace ProxyFetcherConsole
     {
         static void Main(string[] args)
         {
+            try
+            {
+                IProxyFetcherService fetcher = new ProxyFetcherService();
+                fetcher.FetchProxies();
+            }
+            catch (Exception)
+            {
+                //TODO log
+            }
         }
     }
 }

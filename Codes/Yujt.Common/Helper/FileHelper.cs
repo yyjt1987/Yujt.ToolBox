@@ -1,5 +1,7 @@
 ﻿using System;
 using System.IO;
+using yujt.common.EnsureThat;
+using Yujt.Common.EnsureThat;
 
 namespace Yujt.Common.Helper
 {
@@ -41,6 +43,25 @@ namespace Yujt.Common.Helper
             var length = stream.Length;
             stream.Close();
             return length;
+        }
+
+        public static string GetContent(string path)
+        {
+            Ensure.That(File.Exists(path)).IsTrue()
+                  .IfNotSatisfyThrow("File {0} is not existed.", new []{path});
+            using (var stream = new FileStream(path, FileMode.Open))
+            using (var reader = new StreamReader(stream))
+            {
+                return reader.ReadToEnd();
+            }
+        }
+
+        public static string GenFileNameInAssemblyDir(string name)
+        {
+            var path =  Path.Combine(Directory.GetCurrentDirectory(), name);
+            CreateParentDirectory(path);
+
+            return path;
         }
     }
 }

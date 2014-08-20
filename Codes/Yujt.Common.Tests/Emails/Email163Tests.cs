@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Mail;
 using System.Text;
 using System.Threading;
 using Yujt.Common.Emails;
 using NUnit.Framework;
+using Yujt.Common.Helper;
+
 namespace Yujt.Common.Emails.Tests
 {
     [TestFixture()]
@@ -53,6 +56,45 @@ namespace Yujt.Common.Emails.Tests
 
             Assert.AreEqual(expectCount, actualCount);
 
+        }
+
+        [Test]
+        public void SaveFirstAttachementTest()
+        {
+            #region Prepare Data
+
+            const string expectedContent = "Hello World!";
+            IEmail mail163 = new Email163(MAIL_USER_NAME, PASSWORD);
+            var sendMessage = new MailMessage(MAIL_USER_NAME, MAIL_USER_NAME)
+            {
+                Subject = "Test Attachement",
+                Body = string.Empty,
+            };
+            var tempPath1 = Path.GetTempFileName();
+            using (var fileStream = new FileStream(tempPath1, FileMode.Create))
+            {
+                using (var fileWriter = new StreamWriter(fileStream))
+                {
+                    fileWriter.WriteLine(expectedContent);
+                }
+            }
+            sendMessage.Attachments.Add(new Attachment(tempPath1));
+            mail163.Send(sendMessage);
+
+            #endregion Prepare Data
+
+            Thread.Sleep(10 * 1000);
+
+            var resultPath = Path.GetTempFileName();
+            mail163.SaveFirstAttachement("Test Attachement", resultPath);
+
+            Assert.IsTrue(File.Exists(resultPath));
+
+            var fileSize = FileHelper.GetFileSize(resultPath);
+            Assert.IsTrue(fileSize > 0);
+
+            var resultContent = FileHelper.GetContent(resultPath);
+            Assert.AreEqual(expectedContent+"\r\n", resultContent);
         }
     }
 }

@@ -6,11 +6,11 @@ using yujt.common.EnsureThat;
 
 namespace Yujt.Common.EnsureThat
 {
-    public static class EnsureObjectExtention
+    public static class EnsureBoolExtention
     {
-        public static Param<T> IsNotNull<T>(this Param<T> param) where T : class 
+        public static Param<bool> IsTrue(this Param<bool> param)
         {
-            if (param.Value == null)
+            if (!param.Value)
             {
                 param.IsSatisfied = false;
                 param.ExceptionType = typeof(ArgumentNullException);
@@ -19,5 +19,6 @@ namespace Yujt.Common.EnsureThat
             param.IsSatisfied = true;
             return param;
         }
+        
     }
 }
