@@ -1,7 +1,11 @@
-﻿using System.Net;
+﻿using System.IO;
+using System.Linq;
+using System.Net;
 using System.Net.Mail;
 using OpenPop.Mime;
 using OpenPop.Pop3;
+using yujt.common.EnsureThat;
+using Yujt.Common.Helper;
 
 namespace Yujt.Common.Emails
 {
@@ -56,6 +60,31 @@ namespace Yujt.Common.Emails
                     count--;
                 }
                 return null;
+            }
+        }
+
+        public void SaveFirstAttachement(string subject, string targetPath)
+        {
+            var message = ReceiveMail(subject);
+            //Ensure.That(message).
+            var attachement = message.FindAllAttachments().FirstOrDefault();
+
+            if (attachement != null)
+            {
+                if (!File.Exists(targetPath))
+                {
+                    FileHelper.CreateParentDirectory(targetPath);
+                }
+
+                using (var saveStream = new FileStream(targetPath, FileMode.Create))
+                {
+                    attachement.Save(saveStream);
+                }
+            }
+            else
+            {
+                var errrMessage = string.Format("There is no mail contain attachement whose subject is{0}", subject);
+                throw new EmailException(errrMessage);
             }
         }
 

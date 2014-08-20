@@ -8,6 +8,8 @@ namespace Yujt.Common.Emails
     {
         Message ReceiveMail(string subject);
 
+        void SaveFirstAttachement(string subject, string targetPath);
+
         void Send(MailMessage message);
 
         int GetMailCount();

@@ -6,6 +6,7 @@ using System.Threading;
 using CsvHelper;
 using Yujt.Common.Helper;
 using yujt.common.Proxies;
+using Yujt.Common.Emails;
 
 namespace ProxyFetcherConsole.Services
 {
@@ -15,8 +16,10 @@ namespace ProxyFetcherConsole.Services
         private readonly string mIpProxyFilePath =
             Path.Combine(Directory.GetCurrentDirectory(), @"Persist\ProxyList.csv");
         private readonly object mLockObj = new object();
-        private bool mIsLoadProxiesFromFileFinished;
-        private bool mIsLoadProxiesFromInternetFinished;
+
+        private const string MAIL_USER_NAME = "uosfuid@163.com";
+        private const string PASSWORD = "123qaz";
+
         //[Import]
         private readonly IProxyFetcher mProxyFetcher = new ProxyFetcher();
         private readonly IList<Proxy> mProxies = new List<Proxy>();
@@ -24,24 +27,14 @@ namespace ProxyFetcherConsole.Services
         {
             //AsynFetchProxies();
         }
-        public Proxy GetSingleproxy(int index)
-        {
-            while (mProxies.Count < 1 || index >= mProxies.Count)
-            {
-                if (mIsLoadProxiesFromFileFinished && mIsLoadProxiesFromInternetFinished)
-                {
-                    return null;
-                }
-                Thread.Sleep(200);
-            }
-            return mProxies[index];
-        }
 
-        public void AsynFetchProxies()
+        public void FetchProxies()
         {
             var porxiesFromFile = LoadProxiesFromEmail();
             ValidateProxyFromFile(porxiesFromFile);
             EnrichProxiesFromInternet();
+
+            UpdateProxyFile();
         }
         #region Private Methods
         private IEnumerable<Proxy> LoadProxiesFromEmail()
@@ -75,33 +68,24 @@ namespace ProxyFetcherConsole.Services
                 return null;
             }
         }
+        private void CopyProxyFileFromEmail()
+        {
+            IEmail email163 =new Email163(MAIL_USER_NAME, PASSWORD);
+            email163.SaveFirstAttachement("", "");
+        }
+
         private void ValidateProxyFromFile(IEnumerable<Proxy> proxiesFromFile)
         {
-            var thread = new Thread(() =>
+            if (proxiesFromFile == null)
             {
-                if (proxiesFromFile == null)
-                {
-                    return;
-                }
-                CheckProxies(proxiesFromFile);
-
-                mIsLoadProxiesFromFileFinished = true;
-                UpdateProxyFile();
-            });
-            thread.IsBackground = true;
-            thread.Start();
+                return;
+            }
+            CheckProxies(proxiesFromFile);
         }
         private void EnrichProxiesFromInternet()
         {
-            var thread = new Thread(() =>
-            {
-                var proxyList = mProxyFetcher.FetchAll();
-                CheckProxies(proxyList);
-                mIsLoadProxiesFromInternetFinished = true;
-                UpdateProxyFile();
-            });
-            thread.IsBackground = true;
-            thread.Start();
+            var proxyList = mProxyFetcher.FetchAll();
+            CheckProxies(proxyList);
         }
         private void CheckProxies(IEnumerable<Proxy> proxies)
         {
@@ -120,7 +104,7 @@ namespace ProxyFetcherConsole.Services
                         }
                     }
                 }
-            }//Validate all proxy from internet
+            }
         }
         private void UpdateProxyFile()
         {
@@ -142,7 +126,6 @@ namespace ProxyFetcherConsole.Services
     }
     public interface IProxyFetcherService2
     {
-        void AsynFetchProxies();
-        Proxy GetSingleproxy(int index);
+        void FetchProxies();
     }
 }
