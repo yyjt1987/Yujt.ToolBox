@@ -11,9 +11,10 @@ using Yujt.Common.Emails;
 
 namespace ProxyFetcherConsole.Services
 {
-    //[Export("ProxyFetcherService")]
     public class ProxyFetcherService : IProxyFetcherService
     {
+        private static readonly ILog Log = LogManager.GetLog(typeof(ProxyFetcherService));
+
         private readonly IEmail mEmail163;
         private string mLocalProxiesPath = FileHelper.GenFileNameInAssemblyDir("Proxies/ProxyList.csv");
 
@@ -65,9 +66,9 @@ namespace ProxyFetcherConsole.Services
                 }
                 return proxyList;
             }
-            catch (ProxyInitException)
+            catch (Exception ex)
             {
-                //TODO: Log
+                Log.Info("The proxy list file format is incorrect!")
                 return null;
             }
         }
@@ -85,6 +86,7 @@ namespace ProxyFetcherConsole.Services
             var proxyList = mProxyFetcher.FetchAll();
             CheckProxies(proxyList);
         }
+
         private void CheckProxies(IEnumerable<Proxy> proxies)
         {
             foreach (var proxy in proxies)

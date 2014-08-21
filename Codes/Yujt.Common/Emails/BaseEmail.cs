@@ -74,7 +74,7 @@ namespace Yujt.Common.Emails
 
             Ensure.That(attachement).IsNotNull()
                   .IfNotSatisfyThrow("There is no mail contain attachement whose subject is{0}", new[] { subject });
-            
+
             if (!File.Exists(targetPath))
             {
                 FileHelper.CreateParentDirectory(targetPath);
