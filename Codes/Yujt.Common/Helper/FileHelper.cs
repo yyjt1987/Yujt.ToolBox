@@ -60,7 +60,6 @@ namespace Yujt.Common.Helper
         {
             var path =  Path.Combine(Directory.GetCurrentDirectory(), name);
             CreateParentDirectory(path);
-
             return path;
         }
     }

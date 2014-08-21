@@ -4,6 +4,7 @@ using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Yujt.Common.Encrypts;
 
 namespace ProxyFetcherConsole
 {
@@ -11,12 +12,12 @@ namespace ProxyFetcherConsole
     {
         public static string UserName
         {
-            get { return ConfigurationManager.AppSettings["UserName"]; }
+            get { return DesEncyptor.Decrypt(ConfigurationManager.AppSettings["UserName"]); }
         }
 
         public static string Password
         {
-            get { return ConfigurationManager.AppSettings["Password"]; }
+            get { return DesEncyptor.Decrypt(ConfigurationManager.AppSettings["Password"]); }
         }
 
         public static string Subject
