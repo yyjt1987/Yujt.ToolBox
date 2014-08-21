@@ -18,7 +18,7 @@ namespace ProxyFetcherConsole
             }
             catch (Exception ex)
             {
-                Log.Error(ex.Message)
+                Log.Error(ex.Message);
             }
         }
     }

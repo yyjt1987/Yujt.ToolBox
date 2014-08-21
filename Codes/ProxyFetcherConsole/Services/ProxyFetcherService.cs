@@ -8,12 +8,13 @@ using CsvHelper;
 using Yujt.Common.Helper;
 using yujt.common.Proxies;
 using Yujt.Common.Emails;
+using log4net;
 
 namespace ProxyFetcherConsole.Services
 {
     public class ProxyFetcherService : IProxyFetcherService
     {
-        private static readonly ILog Log = LogManager.GetLog(typeof(ProxyFetcherService));
+        private static readonly ILog Log = LogManager.GetLogger(typeof(ProxyFetcherService));
 
         private readonly IEmail mEmail163;
         private string mLocalProxiesPath = FileHelper.GenFileNameInAssemblyDir("Proxies/ProxyList.csv");
@@ -68,7 +69,7 @@ namespace ProxyFetcherConsole.Services
             }
             catch (Exception ex)
             {
-                Log.Info("The proxy list file format is incorrect!")
+                Log.Info("The proxy list file format is incorrect!");
                 return null;
             }
         }
