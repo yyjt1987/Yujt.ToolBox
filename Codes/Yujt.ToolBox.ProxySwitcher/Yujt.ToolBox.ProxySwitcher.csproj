@@ -35,6 +35,7 @@
   <ItemGroup>
     <Reference Include="CsvHelper">
       <HintPath>..\packages\CsvHelper.2.7.0\lib\net40-client\CsvHelper.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="ExtendedGrid">
       <HintPath>..\libs\ExGrid\ExtendedGrid.dll</HintPath>
@@ -106,7 +107,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>del *.pdb /f /q</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

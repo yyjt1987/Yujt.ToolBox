@@ -167,7 +167,6 @@
 xcopy *.xml "Libs\" /y
 del *.dll* /f /q
 del *.xml /f /q
-del *.pdb /f /q
 </PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

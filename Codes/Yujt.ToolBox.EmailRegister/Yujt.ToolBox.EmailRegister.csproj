@@ -26,7 +26,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>..\Yujt.ToolBox.UI\bin\Release\Plugins\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -35,12 +35,15 @@
   <ItemGroup>
     <Reference Include="CsvHelper">
       <HintPath>..\packages\CsvHelper.2.7.0\lib\net40-client\CsvHelper.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="ExtendedGrid">
       <HintPath>..\libs\ExGrid\ExtendedGrid.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="HtmlAgilityPack">
       <HintPath>..\libs\HtmlAgilityPack.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -78,10 +81,12 @@
     <ProjectReference Include="..\Yujt.Common\Yujt.Common.csproj">
       <Project>{3da813e4-e68f-40dc-91ef-98da0c3788ee}</Project>
       <Name>Yujt.Common</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\Yujt.ToolBox.Common\Yujt.ToolBox.Common.csproj">
       <Project>{6D7686AF-F7CA-4D74-9629-B2A0F0792287}</Project>
       <Name>Yujt.ToolBox.Common</Name>
+      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

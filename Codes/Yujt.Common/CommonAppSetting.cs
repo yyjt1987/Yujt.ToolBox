@@ -38,6 +38,22 @@ namespace Yujt.Common
             get { return DesEncyptor.Decrypt(GetSetting("ForeignProxyProvider")); }
         }
 
+        public string UserName
+        {
+            get { return DesEncyptor.Decrypt(GetSetting("UserName")); }
+        }
+
+        public string Password
+        {
+            get { return DesEncyptor.Decrypt(GetSetting("Password")); }
+        }
+
+        public string Subject
+        {
+            get { return GetSetting("Subject"); }
+        }
+
+
         private string GetSetting(string key)
         {
             if (mAppSetting is KeyValueConfigurationCollection)
