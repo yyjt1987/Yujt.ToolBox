@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.Windows;
 using System.Windows.Input;
 using Yujt.Common.Helper;
-using yujt.common.Proxies;
+using Yujt.Common.Proxies;
 using Yujt.ToolBox.Common;
 using Yujt.ToolBox.Common.Commands;
 using Yujt.ToolBox.ProxySwitcher.Annotations;
@@ -81,7 +81,11 @@ namespace Yujt.ToolBox.ProxySwitcher.ViewModel
             {
                 MessageBox.Show("目标服务器连接可用！");
             }
-            MessageBox.Show("目标服务器连接不可用！");
+            else
+            {
+                MessageBox.Show("目标服务器连接不可用！");
+            }
+            
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

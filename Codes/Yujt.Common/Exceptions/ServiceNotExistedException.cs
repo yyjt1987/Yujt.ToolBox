@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace yujt.common.Exceptions
+namespace Yujt.Common.Exceptions
 {
     public class ServiceNotExistedException<TService> : Exception
     {

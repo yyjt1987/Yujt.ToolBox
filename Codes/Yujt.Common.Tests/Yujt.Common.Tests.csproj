@@ -84,9 +84,13 @@
     <Compile Include="Helper\RandomHelperTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Proxies\ProxyFetcherTests.cs" />
+    <Compile Include="Proxies\ProxyRepositoryTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="App.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0">

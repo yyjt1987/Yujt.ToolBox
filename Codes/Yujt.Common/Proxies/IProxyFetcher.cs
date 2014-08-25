@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace yujt.common.Proxies
+namespace Yujt.Common.Proxies
 {
     public interface IProxyFetcher
     {

@@ -1,8 +1,7 @@
-﻿using System.Runtime.InteropServices;
-using NUnit.Framework;
-using yujt.common.Proxies;
+﻿using NUnit.Framework;
+using Yujt.Common.Proxies;
 
-namespace yujt.common.Helper.Tests
+namespace Yujt.Common.Helper.Tests
 {
     [TestFixture]
     public class IeProxyHelperTests

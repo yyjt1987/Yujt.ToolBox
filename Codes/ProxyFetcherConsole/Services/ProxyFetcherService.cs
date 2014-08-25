@@ -5,8 +5,9 @@ using System.Linq;
 using System.Net.Mail;
 using System.Text;
 using CsvHelper;
+using Yujt.Common;
 using Yujt.Common.Helper;
-using yujt.common.Proxies;
+using Yujt.Common.Proxies;
 using Yujt.Common.Emails;
 using log4net;
 
@@ -23,7 +24,8 @@ namespace ProxyFetcherConsole.Services
         private readonly IList<Proxy> mProxies = new List<Proxy>();
         public ProxyFetcherService()
         {
-            mEmail163 = new Email163(AppSetting.UserName, AppSetting.Password);
+            mEmail163 = new Email163(CommonAppSetting.Instatance.UserName,
+                                     CommonAppSetting.Instatance.Password);
         }
 
         public void FetchProxies()
@@ -41,7 +43,7 @@ namespace ProxyFetcherConsole.Services
             var path = Path.GetTempFileName();
             try
             {
-                mEmail163.SaveFirstAttachement(AppSetting.Subject, path);
+                mEmail163.SaveFirstAttachement(CommonAppSetting.Instatance.Subject, path);
             }
             catch (Exception)
             {
@@ -70,6 +72,7 @@ namespace ProxyFetcherConsole.Services
             catch (Exception ex)
             {
                 Log.Info("The proxy list file format is incorrect!");
+                Log.Info(ex);
                 return null;
             }
         }
@@ -120,10 +123,11 @@ namespace ProxyFetcherConsole.Services
                 tw.Flush();
             }
 
-            var sendMsg = new MailMessage(AppSetting.UserName, AppSetting.UserName)
+            var sendMsg = new MailMessage(CommonAppSetting.Instatance.UserName,
+                                          CommonAppSetting.Instatance.UserName)
             {
-                Subject = AppSetting.Subject,
-                Body = AppSetting.Subject
+                Subject = CommonAppSetting.Instatance.Subject,
+                Body = CommonAppSetting.Instatance.Subject
             };
             sendMsg.Attachments.Add(new Attachment(mLocalProxiesPath));
 

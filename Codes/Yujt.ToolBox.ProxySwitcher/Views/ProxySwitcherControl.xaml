@@ -36,7 +36,9 @@
                                     GroupByControlVisibility="Collapsed"
                                     Grid.Row="1"
                                     Grid.ColumnSpan="2"
-                                    ShowRowNumber="True">
+                                    HideColumnChooser="True"
+                                    IsSynchronizedWithCurrentItem="True"
+                                    RowHeaderWidth="25">
             <xgControl:ExtendedDataGrid.ContextMenu>
                 <ContextMenu>
                     <MenuItem Header="切换" Command="{Binding SwitchCommand}"/>
@@ -49,7 +51,7 @@
                 <xgColumn:ExtendedDataGridTextColumn Header="端口" Binding="{Binding Port}" AllowAutoFilter="True" Width="80"/>
                 <xgColumn:ExtendedDataGridTextColumn Header="区域" Binding="{Binding Area}" AllowAutoFilter="True" Width="80"/>
                 <xgColumn:ExtendedDataGridTextColumn Header="耗时（毫秒）" Binding="{Binding TimeSpent}" AllowAutoFilter="True" Width="100"/>
-                <xgColumn:ExtendedDataGridTextColumn Header="地址" Binding="{Binding Address}" AllowAutoFilter="True" Width="300"/>
+                <xgColumn:ExtendedDataGridTextColumn Header="地址" Binding="{Binding Address}" AllowAutoFilter="True" Width="250"/>
             </xgControl:ExtendedDataGrid.Columns>
         </xgControl:ExtendedDataGrid>
     </Grid>

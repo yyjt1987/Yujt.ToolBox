@@ -5,7 +5,7 @@ using System.Net.Mail;
 using System.Runtime;
 using OpenPop.Mime;
 using OpenPop.Pop3;
-using yujt.common.EnsureThat;
+using Yujt.Common.EnsureThat;
 using Yujt.Common.EnsureThat;
 using Yujt.Common.Helper;
 

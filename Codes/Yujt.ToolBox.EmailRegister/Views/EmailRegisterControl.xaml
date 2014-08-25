@@ -18,8 +18,7 @@
                                     IsReadOnly="True"
                                     AutoGenerateColumns="False"
                                     GroupByControlVisibility="Collapsed"
-                                    Grid.Column="0"
-                                    ShowRowNumber="True">
+                                    Grid.Column="0">
             <xgControl:ExtendedDataGrid.ContextMenu>
                 <ContextMenu>
                     <MenuItem Header="复制用户名" Command="{Binding CopyNameCommand}"/>

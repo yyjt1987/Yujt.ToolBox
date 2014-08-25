@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using yujt.common.Exceptions;
+using Yujt.Common.Exceptions;
 
-namespace yujt.common.Service
+namespace Yujt.Common.Service
 {
     public class ServiceLocator
     {

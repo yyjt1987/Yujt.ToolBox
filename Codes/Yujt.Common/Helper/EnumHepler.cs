@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 
-namespace yujt.common.Tests.Helper
+namespace Yujt.Common.Tests.Helper
 {
     public static class EnumHepler
     {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using yujt.common.EnsureThat;
+using Yujt.Common.EnsureThat;
 
 namespace Yujt.Common.EnsureThat
 {

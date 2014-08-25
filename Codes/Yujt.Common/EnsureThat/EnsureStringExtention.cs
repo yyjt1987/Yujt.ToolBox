@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace yujt.common.EnsureThat
+namespace Yujt.Common.EnsureThat
 {
     public static class EnsureStringExtention
     {

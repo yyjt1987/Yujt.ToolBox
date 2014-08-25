@@ -72,7 +72,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resource.resx</DependentUpon>
     </Compile>
-    <Compile Include="Services\ProxyFetcherService.cs" />
     <Compile Include="ViewModel\ProxySwitcherViewModel.cs" />
   </ItemGroup>
   <ItemGroup>

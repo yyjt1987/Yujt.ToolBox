@@ -4,11 +4,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("yujt.common.Tests")]
+[assembly: AssemblyTitle("Yujt.Common.Tests")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
-[assembly: AssemblyProduct("yujt.common.Tests")]
+[assembly: AssemblyProduct("Yujt.Common.Tests")]
 [assembly: AssemblyCopyright("Copyright © Microsoft 2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.Runtime.InteropServices;
 using Yujt.Common.Helper;
 
-namespace yujt.common.Proxies
+namespace Yujt.Common.Proxies
 {
     public class IeProxyHelper
     {

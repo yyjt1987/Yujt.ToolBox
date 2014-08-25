@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace yujt.common.Tests.Exceptions
+namespace Yujt.Common.Tests.Exceptions
 {
     public class CommonException : Exception
     {

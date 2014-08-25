@@ -1,4 +1,4 @@
-﻿namespace yujt.common.Proxies
+﻿namespace Yujt.Common.Proxies
 {
     public class Proxy
     {

@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using NUnit.Framework;
 
-namespace yujt.common.Proxies.Tests
+namespace Yujt.Common.Proxies.Tests
 {
     [TestFixture]
     public class ProxyFetcherTests

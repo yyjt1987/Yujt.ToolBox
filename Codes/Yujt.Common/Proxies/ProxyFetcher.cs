@@ -7,9 +7,10 @@ using System.Threading;
 using HtmlAgilityPack;
 using Yujt.Common;
 using Yujt.Common.Helper;
+using Yujt.Common.Proxies;
 
 
-namespace yujt.common.Proxies
+namespace Yujt.Common.Proxies
 {
     //[Export]
     public class ProxyFetcher : IProxyFetcher

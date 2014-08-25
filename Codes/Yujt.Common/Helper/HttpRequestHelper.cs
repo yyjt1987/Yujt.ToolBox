@@ -211,6 +211,12 @@ namespace Yujt.Common.Helper
             }
         }
 
+
+        /// <summary>
+        /// return value "p1=v1&p2=v2"
+        /// </summary>
+        /// <param name="values"></param>
+        /// <returns></returns>
         public static string GeneratePostingData(Dictionary<string, string> values)
         {
             var valueList = new List<string>();

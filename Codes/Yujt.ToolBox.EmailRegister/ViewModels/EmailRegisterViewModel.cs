@@ -21,7 +21,7 @@ namespace Yujt.ToolBox.EmailRegister.ViewModels
             RefreshImage();
             Password = "123qaz";
             SwitchIpProxyFrequency = 8;
-            RefreshRandomName();
+            RefreshRandomName();//TODO: timeout
             RegisteredEmails = new RegisteredEmailCollection(mEmailPersistentService.GetEmaiList());
         }
 

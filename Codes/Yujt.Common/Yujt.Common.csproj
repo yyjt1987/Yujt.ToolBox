@@ -33,9 +33,17 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CsvHelper">
+      <HintPath>..\packages\CsvHelper.2.7.0\lib\net40-client\CsvHelper.dll</HintPath>
+    </Reference>
     <Reference Include="HtmlAgilityPack">
       <HintPath>..\libs\HtmlAgilityPack.dll</HintPath>
     </Reference>
+    <Reference Include="log4net">
+      <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Build.Framework" />
+    <Reference Include="Microsoft.Build.Utilities.v4.0" />
     <Reference Include="OpenPop">
       <HintPath>..\packages\OpenPop.NET.2.0.6.1071\lib\net40\OpenPop.dll</HintPath>
     </Reference>
@@ -59,6 +67,7 @@
     <Compile Include="CommonAppSetting.cs" />
     <Compile Include="Emails\BaseEmail.cs" />
     <Compile Include="Emails\EmailException.cs" />
+    <Compile Include="Emails\EmailSina.cs" />
     <Compile Include="Emails\IEmail.cs" />
     <Compile Include="Emails\Email163.cs" />
     <Compile Include="Encrypts\DesEncyptor.cs" />
@@ -85,6 +94,7 @@
     <Compile Include="Proxies\IProxyFetcher.cs" />
     <Compile Include="Proxies\Proxy.cs" />
     <Compile Include="Proxies\ProxyFetcher.cs" />
+    <Compile Include="Proxies\ProxyRepository.cs" />
     <Compile Include="Service\ServiceLocator.cs" />
     <Compile Include="Helper\StringHelper.cs" />
   </ItemGroup>

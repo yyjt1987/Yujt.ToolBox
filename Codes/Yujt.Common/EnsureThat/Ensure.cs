@@ -1,4 +1,4 @@
-﻿namespace yujt.common.EnsureThat
+﻿namespace Yujt.Common.EnsureThat
 {
     public class Ensure
     {
